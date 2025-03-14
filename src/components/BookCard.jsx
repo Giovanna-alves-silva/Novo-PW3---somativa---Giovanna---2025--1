@@ -2,7 +2,6 @@ import Button from './Button'
 
 import style from './BookCard.module.css'
 
-
 const BookCard = ({titulo, autor, imagem}) => {
    return( 
     <div className={style.bookCard}>

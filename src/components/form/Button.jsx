@@ -5,8 +5,8 @@ const Button = ({label}) => {
         <div>
             <button>{label}</button>
         </div>
-    )
+    );
   
-}
+};
 
-export default Button
+export default Button;
