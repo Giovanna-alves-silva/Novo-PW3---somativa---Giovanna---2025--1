@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import style from './CreateBook.module.css'
 
 import Input from '../form/Input';
@@ -20,19 +20,20 @@ const CreateBook = () => {
 
     //CAPTURA DE DADOS DOS ELEMENTOS DE SELECT
     function handlerChangeCategory(event){
-        setBook({...book, cod_categoria : event.target.options[event.target.selectedIndex].text})
+        setBook({...book, cod_categoria : event.target.options[event.target.selectedIndex].value})
     }
 
     //ENVIO DOS DADOS PARA A API
     function submit(event) {
         event.preventDefault();
         console.log(book);
+        insertBook(book);
     }  
 
     /* RECUPERA OS DADOS DE CATEGORIA DA APIREST */
     useEffect(() => {
-        fetch('http://http://127.0.0.1:5000/listagemCateorias', {
-            method: '',
+        fetch('http://127.0.0.1:5000/listagemCateorias', {
+            method: 'GET',
             headers: {
                 'Content-Type':'application/json',
                 'Access-Control-Allow-Origin':'*',
@@ -42,12 +43,34 @@ const CreateBook = () => {
             response.json()
         ).then((categorias)=> {
             console.log('TESTE: ' + categorias.data);
+            setCategories(categorias.data);
         }).catch((error) =>{
             console.log('ERRO: ' + error);
         })
-            
-
+        
     }, []);
+
+
+    /*INSERÇÃO DE LIVRO*/
+    function insertBook(book) {
+        fetch('http://127.0.0.1:5000/inserirLivro', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers':'*'
+            },
+            body:JSON.stringify(book)
+        }).then((response) => 
+            response.json()
+        ).then((respJSON)=> {
+            console.log('RESPOSTA: ' + respJSON);
+        }).catch((error) =>{
+            console.log('ERRO: ' + error);
+        })
+
+    }
 
     return(
         <section className={style.create_book_container}>
@@ -83,6 +106,7 @@ const CreateBook = () => {
                     id='cod_categoria'
                     text='Categoria do livro'
                     handlerChange={handlerChangeCategory}
+                    options={categories}
                 />
 
                 <Button
