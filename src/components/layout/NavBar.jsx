@@ -22,7 +22,6 @@ const NavBar = ()=>{
                     <Link to='/newBook'>
                         <li className={style.item}>CADASTRAR LIVROS</li>
                     </Link>
-                    
 
                     <Link to='/listBook'>
                         <li className={style.item}>LISTAR LIVROS</li>

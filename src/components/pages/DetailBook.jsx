@@ -47,7 +47,7 @@ const DetailBook = () => {
 
                 <span className={style.titulo}>{book.nome_livro}</span>
                 <span className={style.autor}>{book.autor_livro}</span>
-
+ 
                 <span className={style.descricao}>
                     {book.descricao_livro}
                 </span>
